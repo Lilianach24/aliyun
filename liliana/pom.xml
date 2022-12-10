@@ -16,12 +16,22 @@
     <properties>
         <java.version>8</java.version>
     </properties>
+
+    <!--工程组件依赖-->
     <dependencies>
+        <!--mysql插件-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!--springboot快速启动-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!--测试插件-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
