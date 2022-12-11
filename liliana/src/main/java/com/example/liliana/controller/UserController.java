@@ -1,5 +1,6 @@
 package com.example.liliana.controller;
 
+import com.example.liliana.dao.UserDao;
 import com.example.liliana.entity.User;
 import com.example.liliana.util.DBUtil;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,46 @@ import java.util.List;
 //用户控制器
 @Controller
 public class UserController {
+
+    //用户查询对象
+    UserDao userDao = new UserDao();
+    //用户注册
+    @RequestMapping("/registration")
+    @ResponseBody
+    public String registration(HttpServletRequest request) throws Exception{
+        //1. 获取参数
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+        String password_copy = request.getParameter("password_copy");
+        String sex = request.getParameter("sex");
+
+        //2. 注册操作
+        if(name.trim().length() == 0){
+            return "用户名不能为空";
+        }
+        if(password.trim().length() <= 6){
+            return "密码长度必须大于6";
+        }
+        if(!password.equals(password_copy)){
+            return "密码不一致";
+        }
+
+        //3. 返回结果
+        if(userDao.getUserByName(name) != null){
+            return "用户已经存在";
+        }
+
+        //4. 保存用户
+        User user = new User();
+        user.setName(name);
+        user.setSex(sex);
+        user.setPassword(password);
+        userDao.saveUser(user);
+
+        //5. 返回结果给前端
+        return "注册成功！";
+    }
+
     //后台功能地址： 获取所有用户
     //http://127.0.0.1:8080/getUserList
     @RequestMapping("/getUserList")
