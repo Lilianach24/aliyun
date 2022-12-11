@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--导入vue3.0版本-->
+    <script src="vue.global.js"></script>
+</head>
+<body>
+<!--  1. vue主节点：界面-->
+<div id="app">
+<!--    <h1 v-text="this.message"></h1>-->
+    <h1>{{message}}</h1>
+    <!--属性绑定-->
+    名字：<span v-text="this.name"></span><br>
+    年龄：<span v-text="this.age"></span>
+    <button v-on:click="this.addAge()">增加</button>
+    <br>
+    身高：<input name="height" v-model="this.height" value="175.5"><br>
+    身高：<span v-text="this.height+'cm'"></span><br>
+    照片：<img v-bind:src="this.pic" width="80" alt=""><br>
+    判断：
+    <div v-if="ok">如果不ok就看不到我</div>
+    <br>
+    循环：
+    <div v-for="book in books">
+        <span v-text="book.id"></span>
+        <span v-text="book.name"></span>
+        <span v-text="book.price"></span>
+    </div>
+</div>
+
+<script>
+    //2. 定义vue对象：数据和行为
+    const app={
+        //属性
+        data(){
+            return{
+                message: 'helloworld!',
+                name: '小明',
+                age: 18,
+                height: 175.5,
+                pic: 'https://www.baidu.com/img/flexible/logo/pc/result.png',
+                ok: false,
+                books: [
+                    {id: 1, name: '红楼梦', price: 20},
+                    {id: 2, name: '西游记', price: 20},
+                    {id: 3, name: '水浒传', price: 20}
+                ]
+            }
+        },
+        //行为
+        methods:{
+            //增加年龄的方法
+            addAge: function(){
+                this.age = this.age + 1;
+            }
+        },
+        //构造
+        mounted(){
+            console.log('app启动成功！')
+        }
+    }
+
+    //3. 启动vue
+    Vue.createApp(app).mount("#app")
+</script>
+</body>
+</html>

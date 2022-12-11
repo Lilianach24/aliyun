@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--导入vue3.0版本-->
+  <script src="vue.global.js"></script>
+  <script src="axios.min.js"></script>
+</head>
+<body>
+<!--1. vue主节点： 界面-->
+<div id="app">
+  <h3>vue+axios异步请求的加法网站</h3>
+  数一：<input type="text" name="a" v-model="this.a" value=""><br>
+  数二：<input type="text" name="a" v-model="this.b" value=""><br>
+  结果：<input type="text" name="a" v-model="this.c" value=""><br>
+  <button v-on:click="this.add()">加法</button>
+
+  <script>
+    //2. 定义vue对象: 数据和行为
+    const app={
+      //属性
+      data(){
+        return{
+          a:'',
+          b:'',
+          c:''
+        }
+      },
+      //行为
+      methods: {
+        //调用后端加法接口
+        add: function(){
+          axios({
+            method: 'post',
+            url: '/add',
+            data:{
+              a: this.a,
+              b: this.b
+            }
+          }).then(response => {
+            this.c = response.data
+          })
+        }
+      },
+      //构造
+      mounted(){
+        console.log("app启动成功！")
+      }
+    }
+    //3. 启动vue
+    Vue.createApp(app).mount("#app")
+  </script>
+</div>
+</body>
+</html>
