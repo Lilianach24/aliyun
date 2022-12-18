@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="/js/vue.global.js"></script>
+    <script src="/js/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+    <h2>用户登录</h2>
+    <div>
+        用户: <input type="text" name="name" v-model="this.name"><br>
+        密码: <input type="text" name="password" v-model="this.password"><br>
+        <button v-on:click="this.login">登录</button>
+    </div>
+</div>
+<script>
+    //定义app对象
+    const app={
+        //属性
+        data(){
+            return{
+                name: "",
+                password: ""
+            }
+        },
+        //行为
+        methods: {
+            //用户登录
+            login: function(){
+                //异步请求
+                axios({
+                    method: 'post',
+                    url: '/login',
+                    data: {
+                        name: this.name,
+                        password: this.password
+                    }
+                }).then(response => {
+                    alert(response.data)
+                })
+            }
+        },
+        //构造
+        mounted(){
+            console.log("登陆页面启动成功!")
+        }
+    }
+    //启动vue
+    Vue.createApp(app).mount("#app")
+</script>
+</body>
+</html>

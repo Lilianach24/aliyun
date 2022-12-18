@@ -4,7 +4,9 @@ import com.example.liliana.dao.UserDao;
 import com.example.liliana.entity.User;
 import com.example.liliana.util.DBUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //用户控制器
 @Controller
@@ -102,6 +105,24 @@ public class UserController {
         User user = new User(id, name, sex, password);
         //6. 返回数据到前端显示
         return user;
+    }
+
+    //用户登录
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public String login(@RequestBody Map<String, String> map) throws Exception{
+        //获取用户名和密码
+        String name = map.get("name");
+        String password = map.get("password");
+        //核对密码
+        User user = userDao.getUserByName(name);
+        if(user == null){
+            return "没有这个用户";
+        }
+        if(!user.getPassword().equals(password)){
+            return "密码错误!";
+        }
+        return "登陆成功";
     }
 }
 

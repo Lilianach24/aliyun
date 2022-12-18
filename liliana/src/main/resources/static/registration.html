@@ -19,4 +19,45 @@
 </form>
 
 </body>
+<script>
+    //app对象
+    const app = {
+        //属性
+        data(){
+            return {
+                name: '',
+                password: '',
+                password_copy: '',
+                sex: ''
+            }
+        },
+        //方法
+        methods: {
+            //注册行为
+            registration: function(){
+                console.log('开始用户注册!')
+                //异步请求
+                axios({
+                    method: 'post',
+                    url: '/registration',
+                    data: {
+                        name: this.name,
+                        password: this.password,
+                        password_copy: this.password_copy,
+                        sex: this.sex
+                    }
+                }).then(response => {
+                    alert(response.data)
+                    console.log('用户注册完成!')
+                });
+            }
+        },
+        //构造
+        method(){
+            console.log("注册页面加载成功!")
+        }
+    }
+    //启动vue
+    Vue.createApp(app).mount("#app")
+</script>
 </html>

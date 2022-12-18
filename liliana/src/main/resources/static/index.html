@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <!--导入vue3.0版本-->
-    <script src="vue.global.js"></script>
+    <script src="js/vue.global.js"></script>
 </head>
 <body>
 <!--  1. vue主节点：界面-->
@@ -28,6 +28,8 @@
         <span v-text="book.name"></span>
         <span v-text="book.price"></span>
     </div>
+    <a href="login.html">登录页面</a>
+    <a href="registration.html">注册页面</a>
 </div>
 
 <script>
@@ -36,7 +38,7 @@
         //属性
         data(){
             return{
-                message: 'helloworld!',
+                message: '欢迎来到我的页面!',
                 name: '小明',
                 age: 18,
                 height: 175.5,

@@ -26,6 +26,8 @@ public class UserDao {
 
         //5. 数据封装成对象
         User user = new User(id, name, sex, password);
+        //关闭连接
+        connection.close();
 
         //6. 返回数据到前端显示
         return user;
@@ -52,6 +54,8 @@ public class UserDao {
 
         //5. 数据封装成对象
         User user = new User(id, name, sex, password);
+        //关闭连接
+        connection.close();
 
         //6. 返回数据到前端显示
         return user;
@@ -60,9 +64,10 @@ public class UserDao {
     //增加一个用户
     public void saveUser(User user) throws Exception{
         Connection connection = new DBUtil().getConnection();
-        String sql = String.format("insert into user values(null, '%s', '%s', '%s'",
+        String sql = String.format("insert into user values(null, '%s', '%s', '%s')",
                 user.getName(), user.getSex(), user.getPassword());
         connection.createStatement().executeUpdate(sql);
+        connection.close();
     }
 
     //修改一个用户
@@ -71,6 +76,7 @@ public class UserDao {
         String sql = String.format("update user set name='%s', sex='%s', password='%s' where id='%d'",
                 user.getName(), user.getSex(), user.getPassword(), user.getId());
         connection.createStatement().executeUpdate(sql);
+        connection.close();
     }
 
     //删除一个用户
@@ -78,5 +84,16 @@ public class UserDao {
         Connection connection = new DBUtil().getConnection();
         String sql = String.format("delete from user where id='%d'", user.getId());
         connection.createStatement().executeUpdate(sql);
+        connection.close();
+    }
+
+    //测试
+    public static void main(String[] args) throws Exception {
+        User user = new User();
+        user.setName("liliana");
+        user.setSex("女");
+        user.setPassword("123456");
+        UserDao userDao = new UserDao();
+        userDao.saveUser(user);
     }
 }
